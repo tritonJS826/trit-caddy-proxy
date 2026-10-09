@@ -10,9 +10,10 @@ trit-caddy-proxy.duckdns.org:13500 {
     }
     respond @options 204
 
-    handle /status {
+    handle /status* {
         root * /www
-        rewrite /status.html
+        @noext path /status
+        rewrite @noext /status.html
         file_server
     }
 
