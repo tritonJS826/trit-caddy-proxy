@@ -19,14 +19,14 @@
 
   <div class="card">
     <h2>Root endpoint</h2>
-    <p><span class="label">URL:</span> <code>https://trit-caddy-proxy.duckdns.org</code></p>
+    <p><span class="label">URL:</span> <code>https://trit-caddy-proxy.duckdns.org:13500</code></p>
     <p><span class="label">Status:</span> <span id="root-status">checking...</span></p>
     <pre id="root-body"></pre>
   </div>
 
   <div class="card">
-    <h2>Nonexistent endpoint (expect 404)</h2>
-    <p><span class="label">URL:</span> <code>https://trit-caddy-proxy.duckdns.org/trit-universal-form</code></p>
+    <h2>Status endpoint (expect status HTML)</h2>
+    <p><span class="label">URL:</span> <code>https://trit-caddy-proxy.duckdns.org:13500/status</code></p>
     <p><span class="label">Status:</span> <span id="form-status">checking...</span></p>
     <pre id="form-body"></pre>
   </div>
@@ -46,8 +46,8 @@
       }
     }
 
-    checkEndpoint('https://trit-caddy-proxy.duckdns.org', document.getElementById('root-status'), document.getElementById('root-body'));
-    checkEndpoint('https://trit-caddy-proxy.duckdns.org/trit-universal-form', document.getElementById('form-status'), document.getElementById('form-body'));
+    checkEndpoint('https://trit-caddy-proxy.duckdns.org:13500', document.getElementById('root-status'), document.getElementById('root-body'));
+    checkEndpoint('https://trit-caddy-proxy.duckdns.org:13500/status', document.getElementById('form-status'), document.getElementById('form-body'));
   </script>
 </body>
 </html>
