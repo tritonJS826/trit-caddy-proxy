@@ -1,9 +1,4 @@
-{
-    https-port: 443
-    email admin@mastersway.duckdns.org
-}
-
-trit-caddy-proxy.duckdns.org {
+:13500 {
     header Access-Control-Allow-Origin "*"
     header Access-Control-Allow-Methods "GET, POST, OPTIONS"
     header Access-Control-Allow-Headers "Content-Type"
@@ -13,5 +8,5 @@ trit-caddy-proxy.duckdns.org {
     }
     respond @options 204
 
-    reverse_proxy http://localhost:13500
+    respond "Caddy proxy running on :13500"
 }
