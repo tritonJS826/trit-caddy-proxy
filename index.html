@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caddy Proxy Status</title>
+  <style>
+    body { font-family: monospace; background: #0d1117; color: #c9d1d9; padding: 2rem; }
+    h1 { color: #58a6ff; }
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 1rem; margin: 1rem 0; }
+    .status-ok { color: #3fb950; }
+    .status-err { color: #f85149; }
+    .label { color: #8b949e; }
+    pre { background: #1c2128; padding: 0.5rem; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>Caddy Proxy Status</h1>
+
+  <div class="card">
+    <h2>Root endpoint</h2>
+    <p><span class="label">URL:</span> <code>https://trit-caddy-proxy.duckdns.org</code></p>
+    <p><span class="label">Status:</span> <span id="root-status">checking...</span></p>
+    <pre id="root-body"></pre>
+  </div>
+
+  <div class="card">
+    <h2>Nonexistent endpoint (expect 404)</h2>
+    <p><span class="label">URL:</span> <code>https://trit-caddy-proxy.duckdns.org/trit-universal-form</code></p>
+    <p><span class="label">Status:</span> <span id="form-status">checking...</span></p>
+    <pre id="form-body"></pre>
+  </div>
+
+  <script>
+    async function checkEndpoint(url, statusEl, bodyEl) {
+      try {
+        const res = await fetch(url);
+        statusEl.textContent = res.status;
+        statusEl.className = res.ok ? 'status-ok' : 'status-err';
+        const text = await res.text();
+        bodyEl.textContent = text || '(empty response)';
+      } catch (err) {
+        statusEl.textContent = 'fetch failed: ' + err.message;
+        statusEl.className = 'status-err';
+        bodyEl.textContent = err.toString();
+      }
+    }
+
+    checkEndpoint('https://trit-caddy-proxy.duckdns.org', document.getElementById('root-status'), document.getElementById('root-body'));
+    checkEndpoint('https://trit-caddy-proxy.duckdns.org/trit-universal-form', document.getElementById('form-status'), document.getElementById('form-body'));
+  </script>
+</body>
+</html>
