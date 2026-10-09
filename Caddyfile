@@ -1,4 +1,6 @@
-:13500 {
+trit-caddy-proxy.duckdns.org:13500 {
+    tls internal
+
     header Access-Control-Allow-Origin "*"
     header Access-Control-Allow-Methods "GET, POST, OPTIONS"
     header Access-Control-Allow-Headers "Content-Type"
@@ -8,5 +10,11 @@
     }
     respond @options 204
 
-    respond "Caddy proxy running on :13500"
+    handle /status {
+        root * /www
+        rewrite /status.html
+        file_server
+    }
+
+    respond "Caddy proxy running on :13500 with HTTPS"
 }
