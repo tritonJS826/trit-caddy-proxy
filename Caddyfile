@@ -1,62 +1,17 @@
 {
-    # Default HTTPS port
     https-port: 443
-    # Email for Let's Encrypt certificate notifications
     email admin@mastersway.duckdns.org
 }
 
-# Masters Way
-mastersway.duckdns.org {
-    # General API (mw-server monolith)
-    @general {
-        path /general*
-    }
-    reverse_proxy @general http://localhost:8000
-
-    # Chat API (mw-server monolith)
-    @chat {
-        path /chat*
-    }
-    reverse_proxy @chat http://localhost:8000
-
-    # Chat WebSocket
-    @chat_ws {
-        path /mw-chat-websocket/ws*
-    }
-    reverse_proxy @chat_ws http://localhost:7994
-
-    # Test WebSocket
-    @test_ws {
-        path /mw-test-websocket*
-    }
-    reverse_proxy @test_ws http://localhost:7991
-
-    # Notification WebSocket
-    @notification_ws {
-        path /mw-notification-websocket/ws*
-    }
-    reverse_proxy @notification_ws http://localhost:7996
-
-    # Telegram bot webhook
-    @telegram {
-        path /telegram/webhook*
-    }
-    reverse_proxy @telegram http://localhost:7997
-}
-
-# Trit Caddy Proxy - reverse proxy + status check target
 trit-caddy-proxy.duckdns.org {
-    # CORS headers for cross-origin requests from Netlify
     header Access-Control-Allow-Origin "*"
     header Access-Control-Allow-Methods "GET, POST, OPTIONS"
     header Access-Control-Allow-Headers "Content-Type"
 
-    # Handle preflight OPTIONS requests
     @options {
         method OPTIONS
     }
     respond @options 204
 
-    # Proxy all requests to the backend on port 13500
     reverse_proxy http://localhost:13500
 }
